@@ -1,0 +1,134 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 var(--spacing-sm);
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: var(--font-size-page-title);
+}
+
+h2 {
+  font-size: var(--font-size-section-heading);
+}
+
+.site-header {
+  background-color: var(--colour-card-background);
+  border-bottom: 1px solid var(--colour-border);
+  padding: var(--spacing-md);
+}
+
+.site-header__inner,
+.site-main,
+.site-footer__inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.site-header__brand {
+  color: var(--colour-primary);
+  font-weight: 700;
+  font-size: var(--font-size-subheading);
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xs);
+}
+
+.site-nav a {
+  color: var(--colour-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-caption);
+}
+
+.site-nav a:hover,
+.site-nav a:focus {
+  color: var(--colour-primary);
+}
+
+.site-main {
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-xl);
+}
+
+.site-footer {
+  border-top: 1px solid var(--colour-border);
+  padding: var(--spacing-md) 0;
+}
+
+.site-footer__inner {
+  color: var(--colour-text-secondary);
+  font-size: var(--font-size-caption);
+}
+
+.card {
+  background-color: var(--colour-card-background);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.status-message {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-caption);
+}
+
+.status-message--error {
+  background-color: #fdecea;
+  color: var(--colour-high-concern);
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--colour-border);
+  border-top-color: var(--colour-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+  margin-right: var(--spacing-xs);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 640px) {
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-nav {
+    margin-top: 0;
+  }
+}

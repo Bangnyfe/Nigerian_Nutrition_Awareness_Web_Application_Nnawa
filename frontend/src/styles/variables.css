@@ -1,0 +1,27 @@
+:root {
+  --colour-primary: #2e7d32;
+  --colour-warning: #f9a825;
+  --colour-high-concern: #d32f2f;
+  --colour-background: #f8faf7;
+  --colour-card-background: #ffffff;
+  --colour-text-primary: #1f2937;
+  --colour-text-secondary: #6b7280;
+  --colour-border: #e5e7eb;
+
+  --font-family-base: 'Inter', system-ui, sans-serif;
+
+  --font-size-page-title: 2rem;
+  --font-size-section-heading: 1.5rem;
+  --font-size-subheading: 1.125rem;
+  --font-size-body: 1rem;
+  --font-size-caption: 0.875rem;
+
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2.5rem;
+
+  --radius-md: 8px;
+  --max-content-width: 960px;
+}
