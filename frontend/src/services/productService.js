@@ -7,3 +7,7 @@ export function fetchApiStatus() {
 export function fetchProducts() {
   return get('/products');
 }
+
+export function searchProducts(keyword) {
+  return get(`/products?search=${encodeURIComponent(keyword)}`);
+}

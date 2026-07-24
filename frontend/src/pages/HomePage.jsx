@@ -1,56 +1,23 @@
-import { useEffect, useState } from 'react';
-import { fetchApiStatus } from '../services/productService.js';
-import LoadingSpinner from '../components/LoadingSpinner.jsx';
-import ErrorMessage from '../components/ErrorMessage.jsx';
+import { useNavigate } from 'react-router-dom';
+import SearchBar from '../components/SearchBar.jsx';
 
 function HomePage() {
-  const [status, setStatus] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    let isActive = true;
-
-    fetchApiStatus()
-      .then((data) => {
-        if (isActive) {
-          setStatus(data);
-        }
-      })
-      .catch((requestError) => {
-        if (isActive) {
-          setError(requestError.message);
-        }
-      })
-      .finally(() => {
-        if (isActive) {
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
+  function handleSearch(keyword) {
+    navigate(`/search?q=${encodeURIComponent(keyword)}`);
+  }
 
   return (
     <div>
       <h1>Nnawa</h1>
-      <p>
-        Understand the nutritional content of packaged foods and discover
-        healthier alternatives.
+      <p className="page-intro">
+        Search for a packaged food product to learn about its nutritional value
+	and discover healthier whole food or product options
       </p>
 
       <section className="card">
-        <h2>System Status</h2>
-        {isLoading && <LoadingSpinner message="Checking backend connection…" />}
-        {!isLoading && error && <ErrorMessage message={error} />}
-        {!isLoading && !error && status && (
-          <p>
-            Backend connected. Database {status.database} with{' '}
-            {status.productCount} product records.
-          </p>
-        )}
+        <SearchBar onSearch={handleSearch} />
       </section>
     </div>
   );
