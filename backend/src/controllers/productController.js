@@ -1,5 +1,8 @@
 import * as productService from '../services/productService.js';
-import { validateSearchKeyword } from '../utils/validation.js';
+import {
+  validateSearchKeyword,
+  validateProductId
+} from '../utils/validation.js';
 import { successResponse, errorResponse } from '../utils/apiResponse.js';
 
 export function getProducts(request, response, next) {
@@ -33,6 +36,34 @@ export function getProducts(request, response, next) {
         : 'No products matched the search keyword.';
 
     response.status(200).json(successResponse(message, products));
+  } catch (error) {
+    next(error);
+  }
+}
+
+export function getProductById(request, response, next) {
+  try {
+    const validation = validateProductId(request.params.id);
+
+    if (!validation.isValid) {
+      return response
+        .status(400)
+        .json(
+          errorResponse('The product request is invalid.', validation.errors)
+        );
+    }
+
+    const product = productService.getProductById(validation.value);
+
+    if (!product) {
+      return response
+        .status(404)
+        .json(errorResponse('Product not found.'));
+    }
+
+    response
+      .status(200)
+      .json(successResponse('Product retrieved successfully.', product));
   } catch (error) {
     next(error);
   }

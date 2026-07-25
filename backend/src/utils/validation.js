@@ -3,7 +3,6 @@ const MAX_SEARCH_KEYWORD_LENGTH = 100;
 export function validateSearchKeyword(keyword) {
   const errors = [];
 
-
   if (typeof keyword !== 'string') {
     return {
       isValid: false,
@@ -18,15 +17,29 @@ export function validateSearchKeyword(keyword) {
     errors.push('The search keyword cannot be empty.');
   }
 
-  if (value.length > MAX_SEARCH_KEYWORD_LENGTH) {
-    errors.push(
-      `The product name cannot exceed ${MAX_SEARCH_KEYWORD_LENGTH} characters.`
-    );
-  }
 
   return {
     isValid: errors.length === 0,
     errors,
+    value
+  };
+}
+
+export function validateProductId(id) {
+  const isWholeNumber = typeof id === 'string' && /^\d+$/.test(id);
+  const value = isWholeNumber ? Number(id) : null;
+
+  if (!isWholeNumber || value < 1) {
+    return {
+      isValid: false,
+      errors: ['The product identifier must be a positive whole number.'],
+      value: null
+    };
+  }
+
+  return {
+    isValid: true,
+    errors: [],
     value
   };
 }

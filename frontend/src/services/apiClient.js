@@ -7,7 +7,13 @@ export async function get(endpoint) {
   const payload = await response.json();
 
   if (!response.ok || !payload.success) {
-    throw new Error(payload.message || 'The request could not be completed.');
+    const error = new Error(
+      payload.message || 'The request could not be completed.'
+    );
+
+
+    error.status = response.status;
+    throw error;
   }
 
   return payload.data;

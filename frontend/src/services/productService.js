@@ -11,3 +11,7 @@ export function fetchProducts() {
 export function searchProducts(keyword) {
   return get(`/products?search=${encodeURIComponent(keyword)}`);
 }
+
+export function fetchProductById(productId) {
+  return get(`/products/${encodeURIComponent(productId)}`);
+}
