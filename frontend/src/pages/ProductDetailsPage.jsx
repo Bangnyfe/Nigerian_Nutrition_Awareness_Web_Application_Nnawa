@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import NutritionTable from '../components/NutritionTable.jsx';
+import HealthIndicatorBadge from '../components/HealthIndicatorBadge.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { fetchProductById } from '../services/productService.js';
@@ -37,6 +38,8 @@ function ProductDetailsPage() {
 
         setProduct(null);
 
+        // A missing product is an expected outcome and is presented
+        // differently from an unexpected failure.
         if (requestError.status === 404 || requestError.status === 400) {
           setIsNotFound(true);
         } else {
@@ -114,9 +117,7 @@ function ProductDetailsPage() {
           <dd>{product.category_name}</dd>
 
           <dt>Processing level</dt>
-          <dd>
-            {processingLevelLabel || 'Not recorded'}
-          </dd>
+          <dd>{processingLevelLabel || 'Not recorded'}</dd>
 
           {servingSize && (
             <>
@@ -136,12 +137,33 @@ function ProductDetailsPage() {
       </section>
 
       <section className="card">
+        <h2>Health Indicator</h2>
+        <HealthIndicatorBadge code={product.health_indicator} />
+        {!product.health_indicator && (
+          <p className="product-details__note">
+            This product has not yet been assigned a Health Indicator.
+          </p>
+        )}
+      </section>
+
+      <section className="card">
         <h2>Nutrition Facts</h2>
         {product.nutrition_facts ? (
           <NutritionTable nutritionFacts={product.nutrition_facts} />
         ) : (
           <p className="empty-state">
             Nutritional information for this product has not been added yet.
+          </p>
+        )}
+      </section>
+
+      <section className="card">
+        <h2>Health Summary</h2>
+        {product.health_summary ? (
+          <p className="product-details__summary">{product.health_summary}</p>
+        ) : (
+          <p className="empty-state">
+            A health summary for this product has not been added yet.
           </p>
         )}
       </section>
