@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import HealthIndicatorBadge from './HealthIndicatorBadge.jsx';
 
 function ProductCard({ product }) {
   return (
@@ -10,6 +11,8 @@ function ProductCard({ product }) {
       )}
 
       <p className="product-card__category">{product.category_name}</p>
+
+      <HealthIndicatorBadge code={product.health_indicator} />
 
       <Link className="button button--secondary" to={`/product/${product.id}`}>
         View Details
