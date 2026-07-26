@@ -1,7 +1,6 @@
 import { getDatabase } from '../database/connection.js';
 
 // All SQL for product data is executed here. No other layer of the application communicates with SQLite.
-
 const PRODUCT_SELECT = `
   SELECT
     products.id,
@@ -27,7 +26,8 @@ export function getAllProducts() {
 export function searchProductsByName(keyword) {
   const database = getDatabase();
 
-  // The wildcard characters used by LIKE are escaped so that a keyword containing % or _ is matched as ordinary text rather than as a pattern.
+  // The wildcard characters used by LIKE are escaped so that a keyword
+  // containing % or _ is matched as ordinary text rather than as a pattern.
   const escapedKeyword = keyword.replace(/[\\%_]/g, '\\$&');
   const pattern = `%${escapedKeyword}%`;
 
@@ -87,9 +87,24 @@ export function getProductById(productId) {
     )
     .get(productId);
 
+  // A product may have any number of nutritional concerns, including none.
+  const nutritionalConcerns = database
+    .prepare(
+      `SELECT
+         id,
+         title,
+         description,
+         severity
+       FROM nutritional_concerns
+       WHERE product_id = ?
+       ORDER BY id ASC;`
+    )
+    .all(productId);
+
   return {
     ...product,
-    nutrition_facts: nutritionFacts || null
+    nutrition_facts: nutritionFacts || null,
+    nutritional_concerns: nutritionalConcerns
   };
 }
 
