@@ -312,6 +312,67 @@ h3 {
   background-color: var(--colour-text-secondary);
 }
 
+/* Nutritional concerns */
+
+.concern-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.concern {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--colour-border);
+}
+
+.concern:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.concern__header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.concern__title {
+  font-weight: 600;
+}
+
+.concern__description {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--colour-text-secondary);
+}
+
+.severity-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px var(--spacing-xs);
+  border-radius: var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.severity-tag--low {
+  background-color: #e8f3e9;
+  color: #1b5e20;
+}
+
+.severity-tag--moderate {
+  background-color: #fef4e0;
+  color: #8a5a00;
+}
+
+.severity-tag--high {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
 /* Product details */
 
 .back-link {
