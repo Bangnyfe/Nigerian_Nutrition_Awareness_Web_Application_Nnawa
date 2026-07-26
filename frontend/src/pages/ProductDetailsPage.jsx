@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import NutritionTable from '../components/NutritionTable.jsx';
 import HealthIndicatorBadge from '../components/HealthIndicatorBadge.jsx';
+import NutritionalConcerns from '../components/NutritionalConcerns.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { fetchProductById } from '../services/productService.js';
@@ -167,8 +168,12 @@ function ProductDetailsPage() {
           </p>
         )}
       </section>
+
+      <section className="card">
+        <h2>Nutritional Concerns</h2>
+        <NutritionalConcerns concerns={product.nutritional_concerns} />
+      </section>
     </div>
   );
 }
-
 export default ProductDetailsPage;
