@@ -64,5 +64,4 @@ function AlternativeRecommendations({ productAlternatives, wholeFoodAlternatives
     </div>
   );
 }
-
 export default AlternativeRecommendations;
