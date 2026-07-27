@@ -101,10 +101,39 @@ export function getProductById(productId) {
     )
     .all(productId);
 
+  // Healthier processed alternatives. May be empty.
+  const productAlternatives = database
+    .prepare(
+      `SELECT
+         id,
+         alternative_name,
+         reason
+       FROM product_alternatives
+       WHERE product_id = ?
+       ORDER BY id ASC;`
+    )
+    .all(productId);
+
+  // Whole-food alternatives. May be empty.
+  const wholeFoodAlternatives = database
+    .prepare(
+      `SELECT
+         id,
+         food_name,
+         description,
+         benefit
+       FROM whole_food_alternatives
+       WHERE product_id = ?
+       ORDER BY id ASC;`
+    )
+    .all(productId);
+
   return {
     ...product,
     nutrition_facts: nutritionFacts || null,
-    nutritional_concerns: nutritionalConcerns
+    nutritional_concerns: nutritionalConcerns,
+    product_alternatives: productAlternatives,
+    whole_food_alternatives: wholeFoodAlternatives
   };
 }
 
