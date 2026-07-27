@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import NutritionTable from '../components/NutritionTable.jsx';
 import HealthIndicatorBadge from '../components/HealthIndicatorBadge.jsx';
 import NutritionalConcerns from '../components/NutritionalConcerns.jsx';
+import AlternativeRecommendations from '../components/AlternativeRecommendations.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { fetchProductById } from '../services/productService.js';
@@ -172,6 +173,14 @@ function ProductDetailsPage() {
       <section className="card">
         <h2>Nutritional Concerns</h2>
         <NutritionalConcerns concerns={product.nutritional_concerns} />
+      </section>
+
+      <section className="card">
+        <h2>Healthier Alternatives</h2>
+        <AlternativeRecommendations
+          productAlternatives={product.product_alternatives}
+          wholeFoodAlternatives={product.whole_food_alternatives}
+        />
       </section>
     </div>
   );
