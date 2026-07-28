@@ -111,7 +111,7 @@ function ProductForm({
     setRows((rows) => rows.filter((row) => row._key !== key));
   }
 
-function buildPayload() {
+  function buildPayload() {
     const nutritionFacts = { basis };
     for (const field of NUTRIENT_FIELDS) {
       nutritionFacts[field.key] = nutrition[field.key];
@@ -163,7 +163,7 @@ function buildPayload() {
         }))
     };
   }
-  
+
   async function handleSubmit(event) {
     event.preventDefault();
 
