@@ -6,13 +6,17 @@ import {
   updateProduct,
   deleteProduct
 } from '../controllers/productController.js';
+import { requireAuth } from '../middleware/requireAuth.js';
 
 const router = Router();
 
+// Read endpoints are public.
 router.get('/', getProducts);
-router.post('/', createProduct);
 router.get('/:id', getProductById);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
+
+// Write endpoints require an authenticated administrator.
+router.post('/', requireAuth, createProduct);
+router.put('/:id', requireAuth, updateProduct);
+router.delete('/:id', requireAuth, deleteProduct);
 
 export default router;
