@@ -678,6 +678,49 @@ h3 {
   border-bottom: none;
 }
 
+/* Authentication */
+
+.site-nav__button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: var(--colour-text-secondary);
+  font-size: var(--font-size-caption);
+}
+
+.site-nav__button:hover,
+.site-nav__button:focus {
+  color: var(--colour-primary);
+}
+
+.login-page {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.login-form {
+  margin-top: var(--spacing-md);
+}
+
+.login-form .button {
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.admin-header__user {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--colour-text-secondary);
+  font-size: var(--font-size-caption);
+}
+
+.admin-header__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
 @media (min-width: 640px) {
   .site-header__inner {
     display: flex;
