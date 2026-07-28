@@ -40,8 +40,6 @@ function ProductDetailsPage() {
 
         setProduct(null);
 
-        // A missing product is an expected outcome and is presented
-        // differently from an unexpected failure.
         if (requestError.status === 404 || requestError.status === 400) {
           setIsNotFound(true);
         } else {
@@ -89,9 +87,7 @@ function ProductDetailsPage() {
     );
   }
 
-  const processingLevelLabel = getProcessingLevelLabel(
-    product.processing_level
-  );
+  const processingLevelLabel = getProcessingLevelLabel(product.processing_level);
   const servingSize = formatServingSize(
     product.serving_size_value,
     product.serving_size_unit
@@ -160,17 +156,6 @@ function ProductDetailsPage() {
       </section>
 
       <section className="card">
-        <h2>Health Summary</h2>
-        {product.health_summary ? (
-          <p className="product-details__summary">{product.health_summary}</p>
-        ) : (
-          <p className="empty-state">
-            A health summary for this product has not been added yet.
-          </p>
-        )}
-      </section>
-
-      <section className="card">
         <h2>Nutritional Concerns</h2>
         <NutritionalConcerns concerns={product.nutritional_concerns} />
       </section>
@@ -185,4 +170,5 @@ function ProductDetailsPage() {
     </div>
   );
 }
+
 export default ProductDetailsPage;
