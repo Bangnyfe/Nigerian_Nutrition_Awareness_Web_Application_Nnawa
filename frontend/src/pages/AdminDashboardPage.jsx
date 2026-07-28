@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HealthIndicatorBadge from '../components/HealthIndicatorBadge.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import { fetchProducts, deleteProduct } from '../services/productService.js';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function AdminDashboardPage() {
+  const navigate = useNavigate();
+  const { email, logout, clearAuth } = useAuth();
+
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,13 +18,28 @@ function AdminDashboardPage() {
   const [deletingId, setDeletingId] = useState(null);
   const [actionError, setActionError] = useState(null);
 
+  // A 401 from any admin action means the session has expired. Auth state is
+  // cleared and the administrator is returned to the login page.
+  function handlePossibleAuthError(requestError) {
+    if (requestError.status === 401) {
+      clearAuth();
+      navigate('/admin/login', { replace: true });
+      return true;
+    }
+    return false;
+  }
+
   function loadProducts() {
     setIsLoading(true);
     setError(null);
 
     return fetchProducts()
       .then((data) => setProducts(data))
-      .catch((requestError) => setError(requestError.message))
+      .catch((requestError) => {
+        if (!handlePossibleAuthError(requestError)) {
+          setError(requestError.message);
+        }
+      })
       .finally(() => setIsLoading(false));
   }
 
@@ -58,19 +77,38 @@ function AdminDashboardPage() {
       setPendingDeleteId(null);
       await loadProducts();
     } catch (requestError) {
-      setActionError(requestError.message);
+      if (!handlePossibleAuthError(requestError)) {
+        setActionError(requestError.message);
+      }
     } finally {
       setDeletingId(null);
     }
   }
 
+  async function handleLogout() {
+    await logout();
+    navigate('/', { replace: true });
+  }
+
   return (
     <div>
       <div className="admin-header">
-        <h1>Admin Dashboard</h1>
-        <Link className="button button--primary" to="/admin/new">
-          Add Product
-        </Link>
+        <div>
+          <h1>Admin Dashboard</h1>
+          {email && <p className="admin-header__user">Signed in as {email}</p>}
+        </div>
+        <div className="admin-header__actions">
+          <Link className="button button--primary" to="/admin/new">
+            Add Product
+          </Link>
+          <button
+            type="button"
+            className="button button--secondary"
+            onClick={handleLogout}
+          >
+            Log out
+          </button>
+        </div>
       </div>
 
       {actionError && <ErrorMessage message={actionError} />}
