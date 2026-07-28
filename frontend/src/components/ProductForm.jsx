@@ -111,14 +111,29 @@ function ProductForm({
     setRows((rows) => rows.filter((row) => row._key !== key));
   }
 
-  function buildPayload() {
+function buildPayload() {
     const nutritionFacts = { basis };
     for (const field of NUTRIENT_FIELDS) {
       nutritionFacts[field.key] = nutrition[field.key];
     }
 
-    // Rows whose required field is blank are dropped so an unused empty row
-    // does not cause a validation error.
+    // A row is sent when the user has entered anything in it. Fully blank
+    // rows are dropped as unused; partially filled rows are sent so the
+    // backend can validate them and report any missing required field,
+    // rather than silently discarding the admin's input.
+    const concernHasContent = (row) =>
+      row.title.trim() !== '' ||
+      row.description.trim() !== '' ||
+      row.severity !== '';
+
+    const productAlternativeHasContent = (row) =>
+      row.alternative_name.trim() !== '' || row.reason.trim() !== '';
+
+    const wholeFoodHasContent = (row) =>
+      row.food_name.trim() !== '' ||
+      row.description.trim() !== '' ||
+      row.benefit.trim() !== '';
+
     return {
       product_name: fields.product_name,
       brand: fields.brand,
@@ -130,17 +145,17 @@ function ProductForm({
       serving_size_unit: fields.serving_size_unit,
       nutrition_facts: nutritionFacts,
       nutritional_concerns: concerns
-        .filter((concern) => concern.title.trim() !== '')
+        .filter(concernHasContent)
         .map(({ title, description, severity }) => ({
           title,
           description,
           severity
         })),
       product_alternatives: productAlternatives
-        .filter((alternative) => alternative.alternative_name.trim() !== '')
+        .filter(productAlternativeHasContent)
         .map(({ alternative_name, reason }) => ({ alternative_name, reason })),
       whole_food_alternatives: wholeFoodAlternatives
-        .filter((alternative) => alternative.food_name.trim() !== '')
+        .filter(wholeFoodHasContent)
         .map(({ food_name, description, benefit }) => ({
           food_name,
           description,
@@ -148,7 +163,7 @@ function ProductForm({
         }))
     };
   }
-
+  
   async function handleSubmit(event) {
     event.preventDefault();
 
