@@ -7,6 +7,8 @@ import AboutPage from './pages/AboutPage.jsx';
 import HowItWorksPage from './pages/HowItWorksPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
 import AdminProductPage from './pages/AdminProductPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   return (
@@ -18,9 +20,33 @@ function App() {
           <Route path="/product/:id" element={<ProductDetailsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
-          <Route path="/admin" element={<AdminDashboardPage />} />
-          <Route path="/admin/new" element={<AdminProductPage />} />
-          <Route path="/admin/edit/:id" element={<AdminProductPage />} />
+
+          <Route path="/admin/login" element={<LoginPage />} />
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminDashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/new"
+            element={
+              <ProtectedRoute>
+                <AdminProductPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/edit/:id"
+            element={
+              <ProtectedRoute>
+                <AdminProductPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
