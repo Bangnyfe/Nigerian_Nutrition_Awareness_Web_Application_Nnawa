@@ -6,6 +6,7 @@ import ProductDetailsPage from './pages/ProductDetailsPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import HowItWorksPage from './pages/HowItWorksPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
+import AdminProductPage from './pages/AdminProductPage.jsx';
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/new" element={<AdminProductPage />} />
+          <Route path="/admin/edit/:id" element={<AdminProductPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
-
 export default App;
