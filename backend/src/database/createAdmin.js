@@ -12,6 +12,7 @@ import { env, validateEnv } from '../config/env.js';
 import { getDatabase } from './connection.js';
 import { initDatabase } from './initDatabase.js';
 import { normaliseEmail, BCRYPT_COST_FACTOR } from '../services/authService.js';
+import { SESSION_TABLE_NAME } from '../config/session.js';
 
 // Removes every stored session so that rotating the password logs the
 // administrator out everywhere. Reads the same session database path the
@@ -23,16 +24,15 @@ function clearAllSessions() {
 
   const sessionDb = new Database(env.sessionDbPath);
   try {
-    // connect-sqlite3 stores sessions in a "sessions" table. If the table
-    // does not exist yet there is nothing to clear.
+    // If the session table does not exist yet there is nothing to clear.
     const tableExists = sessionDb
       .prepare(
-        "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'sessions';"
+        "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?;"
       )
-      .get();
+      .get(SESSION_TABLE_NAME);
 
     if (tableExists) {
-      sessionDb.prepare('DELETE FROM sessions;').run();
+      sessionDb.prepare(`DELETE FROM ${SESSION_TABLE_NAME};`).run();
     }
   } finally {
     sessionDb.close();
@@ -51,9 +51,7 @@ function run() {
   }
 
   if (typeof password !== 'string' || password.length < 8) {
-    console.error(
-      'ADMIN_PASSWORD must be set and at least 8 characters long.'
-    );
+    console.error('ADMIN_PASSWORD must be set and at least 8 characters long.');
     process.exit(1);
   }
 
@@ -69,7 +67,9 @@ function run() {
 
   // The single-admin rule: if any administrator already exists, only the
   // matching email may be updated; a different email is rejected.
-  const anyAdmin = database.prepare('SELECT id, email FROM admins LIMIT 1;').get();
+  const anyAdmin = database
+    .prepare('SELECT id, email FROM admins LIMIT 1;')
+    .get();
 
   if (anyAdmin && !existing) {
     console.error(
@@ -82,9 +82,7 @@ function run() {
 
   if (existing) {
     database
-      .prepare(
-        'UPDATE admins SET password_hash = ? WHERE id = ?;'
-      )
+      .prepare('UPDATE admins SET password_hash = ? WHERE id = ?;')
       .run(passwordHash, existing.id);
 
     clearAllSessions();
