@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS products (
       'CONSUME_IN_MODERATION',
       'HIGH_NUTRITIONAL_CONCERN'
     )),
-  health_summary TEXT,
   serving_size_value REAL CHECK (serving_size_value > 0),
   serving_size_unit TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
