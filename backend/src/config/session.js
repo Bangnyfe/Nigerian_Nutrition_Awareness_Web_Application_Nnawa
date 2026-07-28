@@ -16,9 +16,16 @@ export function createSessionMiddleware() {
   const sessionDir = path.dirname(env.sessionDbPath);
   fs.mkdirSync(sessionDir, { recursive: true });
 
+  // connect-sqlite3 appends ".sqlite" to the db name itself, so the name is
+  // passed without its extension.
+  const sessionFileName = path.basename(
+    env.sessionDbPath,
+    path.extname(env.sessionDbPath)
+  );
+
   const store = new SqliteStore({
     dir: sessionDir,
-    db: path.basename(env.sessionDbPath)
+    db: sessionFileName
   });
 
   return session({
