@@ -13,8 +13,10 @@ export function getAllCategories() {
 export function getOrCreateCategoryId(name) {
   const database = getDatabase();
 
+  // Matching is case-insensitive so "Instant Noodles" and "instant noodles"
+  // resolve to the same category.
   const existing = database
-    .prepare('SELECT id FROM categories WHERE name = ?;')
+    .prepare('SELECT id FROM categories WHERE name = ? COLLATE NOCASE;')
     .get(name);
 
   if (existing) {
