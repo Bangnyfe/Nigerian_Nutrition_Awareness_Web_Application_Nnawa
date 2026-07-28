@@ -68,6 +68,13 @@ CREATE TABLE IF NOT EXISTS whole_food_alternatives (
   FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS admins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE INDEX IF NOT EXISTS idx_products_product_name
   ON products (product_name);
 CREATE INDEX IF NOT EXISTS idx_products_category_id
