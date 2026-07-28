@@ -1,6 +1,15 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function MainLayout() {
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    navigate('/', { replace: true });
+  }
+
   return (
     <>
       <header className="site-header">
@@ -13,7 +22,20 @@ function MainLayout() {
             <Link to="/search">Search</Link>
             <Link to="/how-it-works">How It Works</Link>
             <Link to="/about">About</Link>
-            <Link to="/admin">Admin</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/admin">Admin</Link>
+                <button
+                  type="button"
+                  className="site-nav__button"
+                  onClick={handleLogout}
+                >
+                  Log out
+                </button>
+              </>
+            ) : (
+              <Link to="/admin/login">Admin</Link>
+            )}
           </nav>
         </div>
       </header>
@@ -31,5 +53,4 @@ function MainLayout() {
     </>
   );
 }
-
 export default MainLayout;
