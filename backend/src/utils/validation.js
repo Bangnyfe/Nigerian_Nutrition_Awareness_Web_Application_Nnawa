@@ -241,15 +241,27 @@ export function validateProductPayload(payload) {
 
   const servingResult = optionalNumber(payload.serving_size_value);
   let servingSizeValue = null;
+  const servingSizeUnit = optionalString(payload.serving_size_unit);
+
   if (!servingResult.ok) {
     errors.push('Serving size value must be a number.');
   } else {
     servingSizeValue = servingResult.value;
+
     if (servingSizeValue !== null && servingSizeValue <= 0) {
       errors.push('Serving size value must be greater than zero.');
     }
+
+    // Serving size is stored as a value/unit pair so a number is never shown
+    // without its unit. Either both are provided or neither is.
+    if (servingSizeValue !== null && servingSizeUnit === null) {
+      errors.push('A serving size unit is required when a value is provided.');
+    }
+
+    if (servingSizeUnit !== null && servingSizeValue === null) {
+      errors.push('A serving size value is required when a unit is provided.');
+    }
   }
-  const servingSizeUnit = optionalString(payload.serving_size_unit);
 
   const nutritionFacts = validateNutritionFacts(payload.nutrition_facts, errors);
 
