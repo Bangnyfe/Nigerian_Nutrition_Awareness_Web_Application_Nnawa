@@ -534,6 +534,18 @@ h3 {
   margin-bottom: var(--spacing-lg);
 }
 
+.admin-header__user {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--colour-text-secondary);
+  font-size: var(--font-size-caption);
+}
+
+.admin-header__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
 .admin-list {
   list-style: none;
   margin: 0;
@@ -580,6 +592,172 @@ h3 {
   font-size: var(--font-size-caption);
   color: var(--colour-high-concern);
   font-weight: 600;
+}
+
+/* Authentication */
+
+.site-nav__button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: var(--colour-text-secondary);
+  font-size: var(--font-size-caption);
+}
+
+.site-nav__button:hover,
+.site-nav__button:focus {
+  color: var(--colour-primary);
+}
+
+.login-page {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.login-form {
+  margin-top: var(--spacing-md);
+}
+
+.login-form .button {
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+/* Home landing page */
+
+.hero {
+  text-align: center;
+  padding: var(--spacing-lg) 0 var(--spacing-xl);
+}
+
+.hero__title {
+  max-width: 20ch;
+  margin: 0 auto var(--spacing-md);
+}
+
+.hero__description {
+  max-width: 60ch;
+  margin: 0 auto var(--spacing-lg);
+  color: var(--colour-text-secondary);
+}
+
+.hero__search {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.popular-searches {
+  margin-top: var(--spacing-md);
+}
+
+.popular-searches__label {
+  display: block;
+  font-size: var(--font-size-caption);
+  color: var(--colour-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.popular-searches__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.chip {
+  font-family: inherit;
+  font-size: var(--font-size-caption);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 999px;
+  border: 1px solid var(--colour-border);
+  background-color: var(--colour-card-background);
+  color: var(--colour-text-primary);
+  cursor: pointer;
+}
+
+.chip:hover,
+.chip:focus {
+  border-color: var(--colour-primary);
+  color: var(--colour-primary);
+}
+
+.home-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+.info-card {
+  background-color: var(--colour-card-background);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+}
+
+.info-card__title {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--colour-primary);
+}
+
+.info-card__description {
+  margin: 0;
+  color: var(--colour-text-secondary);
+}
+
+.benefit-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-sm);
+}
+
+.benefit-list__item {
+  background-color: var(--colour-card-background);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.disclaimer {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--colour-border);
+  color: var(--colour-text-secondary);
+  font-size: var(--font-size-caption);
+}
+
+/* Content pages (About, How Nnawa Evaluates Foods) */
+
+.content-page {
+  max-width: 760px;
+}
+
+.content-page h2 {
+  margin-top: 0;
+}
+
+.content-page h3 {
+  margin-top: var(--spacing-md);
+}
+
+.detail-points {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 /* Product details */
@@ -678,49 +856,6 @@ h3 {
   border-bottom: none;
 }
 
-/* Authentication */
-
-.site-nav__button {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  color: var(--colour-text-secondary);
-  font-size: var(--font-size-caption);
-}
-
-.site-nav__button:hover,
-.site-nav__button:focus {
-  color: var(--colour-primary);
-}
-
-.login-page {
-  max-width: 420px;
-  margin: 0 auto;
-}
-
-.login-form {
-  margin-top: var(--spacing-md);
-}
-
-.login-form .button {
-  width: 100%;
-  margin-top: var(--spacing-sm);
-}
-
-.admin-header__user {
-  margin: var(--spacing-xs) 0 0;
-  color: var(--colour-text-secondary);
-  font-size: var(--font-size-caption);
-}
-
-.admin-header__actions {
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
-}
-
 @media (min-width: 640px) {
   .site-header__inner {
     display: flex;
@@ -749,6 +884,14 @@ h3 {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .info-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .benefit-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .detail-list {
