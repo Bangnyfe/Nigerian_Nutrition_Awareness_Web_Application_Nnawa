@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
 function LoginPage() {
@@ -11,11 +11,10 @@ function LoginPage() {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // An already-authenticated administrator has no reason to see the login
-  // form.
+  // An already-authenticated administrator is redirected declaratively, which
+  // avoids navigating during render under React.StrictMode.
   if (isAuthenticated) {
-    navigate('/admin', { replace: true });
-    return null;
+    return <Navigate to="/admin" replace />;
   }
 
   async function handleSubmit(event) {
@@ -80,5 +79,4 @@ function LoginPage() {
     </div>
   );
 }
-
 export default LoginPage;
