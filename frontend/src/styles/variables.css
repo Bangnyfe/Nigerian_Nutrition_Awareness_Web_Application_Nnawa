@@ -1,27 +1,60 @@
 :root {
+  /* Colour palette — Nnawa Redesign Guide */
   --colour-primary: #2e7d32;
-  --colour-warning: #f9a825;
-  --colour-high-concern: #d32f2f;
-  --colour-background: #f8faf7;
+  --colour-primary-hover: #66bb6a;
+  --colour-mint: #ddf5e5;
+  --colour-background: #f8fbf8;
   --colour-card-background: #ffffff;
-  --colour-text-primary: #1f2937;
-  --colour-text-secondary: #6b7280;
-  --colour-border: #e5e7eb;
+  --colour-text-primary: #1c1c1c;
+  --colour-text-secondary: #616161;
+  --colour-border: #e4ece5;
 
-  --font-family-base: 'Inter', system-ui, sans-serif;
+  /* The warning token is retained for existing references and mapped to the
+     guide's "Consume in Moderation" amber. */
+  --colour-warning: #f4b400;
 
-  --font-size-page-title: 2rem;
+  /* Health indicator colours — presentation values from the redesign guide.
+     The labels themselves are unchanged. */
+  --colour-indicator-healthier: #4caf50;
+  --colour-indicator-moderation: #f4b400;
+  --colour-indicator-concern: #d93025;
+
+  /* High-concern token kept for existing error styling references. */
+  --colour-high-concern: #d93025;
+
+  /* Typography */
+  --font-family-base: 'Poppins', system-ui, sans-serif;
+  --font-family-heading: 'Fraunces', Georgia, serif;
+
+  --font-size-page-title: 2.25rem;
   --font-size-section-heading: 1.5rem;
   --font-size-subheading: 1.125rem;
   --font-size-body: 1rem;
   --font-size-caption: 0.875rem;
 
+  /* Spacing system — 8 / 16 / 24, section 64, page 80 */
   --spacing-xs: 0.5rem;
   --spacing-sm: 0.75rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
-  --spacing-xl: 2.5rem;
+  --spacing-xl: 4rem;
+  --spacing-page: 5rem;
 
-  --radius-md: 8px;
-  --max-content-width: 960px;
+  /* Border radius */
+  --radius-card: 18px;
+  --radius-button: 12px;
+  --radius-input: 12px;
+  --radius-search: 16px;
+  --radius-badge: 999px;
+
+  /* Retained generic token, mapped to the button radius. */
+  --radius-md: 12px;
+
+  /* Shadow — subtle only */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  /* Motion */
+  --transition-base: 180ms ease;
+
+  --max-content-width: 1040px;
 }
