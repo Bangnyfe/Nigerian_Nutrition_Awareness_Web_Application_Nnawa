@@ -8,7 +8,7 @@ function AboutPage() {
           Nnawa is an educational web application that helps people understand
           the nutritional content of packaged foods commonly available in
           Nigeria. Users can search for products, view their nutrition facts
-          and health indicators, and find healthier alternatives — all
+          and health indicators, and find healthier alternatives, all
           presented in simple, everyday language.
         </p>
       </section>
