@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage.jsx';
 import SearchResultsPage from './pages/SearchResultsPage.jsx';
 import ProductDetailsPage from './pages/ProductDetailsPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
-import HowItWorksPage from './pages/HowItWorksPage.jsx';
+import HowNnawaEvaluatesPage from './pages/HowNnawaEvaluatesPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
 import AdminProductPage from './pages/AdminProductPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
@@ -19,7 +19,9 @@ function App() {
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/product/:id" element={<ProductDetailsPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          {/* The route path is kept as /how-it-works; only the page content
+              and navigation label were renamed. */}
+          <Route path="/how-it-works" element={<HowNnawaEvaluatesPage />} />
 
           <Route path="/admin/login" element={<LoginPage />} />
 
