@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: nnawa
+    runtime: node
+    plan: starter
+    # Build the frontend, then install backend dependencies.
+    buildCommand: npm --prefix backend run build:client && npm --prefix backend install
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/v1/health
+    disk:
+      name: nnawa-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_PATH
+        value: /var/data/nnawa.sqlite
+      - key: SESSION_DB_PATH
+        value: /var/data/sessions.sqlite
+      - key: SESSION_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
