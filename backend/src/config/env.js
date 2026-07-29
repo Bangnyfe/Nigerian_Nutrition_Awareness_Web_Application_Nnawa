@@ -10,6 +10,9 @@ const backendRoot = path.resolve(
   '..'
 );
 
+// The repository root is one level above the backend directory.
+const repoRoot = path.resolve(backendRoot, '..');
+
 function resolvePath(configuredPath, fallback) {
   const value = configuredPath || fallback;
   return path.isAbsolute(value) ? value : path.join(backendRoot, value);
@@ -36,6 +39,14 @@ if (!sessionSecret) {
   }
 }
 
+// Location of the built React app served by Express in production. Defaults
+// to frontend/dist at the repository root; override with CLIENT_DIST_PATH.
+const clientDistPath = process.env.CLIENT_DIST_PATH
+  ? (path.isAbsolute(process.env.CLIENT_DIST_PATH)
+      ? process.env.CLIENT_DIST_PATH
+      : path.join(backendRoot, process.env.CLIENT_DIST_PATH))
+  : path.join(repoRoot, 'frontend', 'dist');
+
 export const env = {
   port: Number(process.env.PORT) || 4000,
   nodeEnv,
@@ -46,7 +57,8 @@ export const env = {
     './data/sessions.sqlite'
   ),
   sessionSecret,
-  // Read only by the create-admin script.
+  clientDistPath,
+  // Read by the create-admin script and the first-run admin bootstrap.
   adminEmail: process.env.ADMIN_EMAIL || '',
   adminPassword: process.env.ADMIN_PASSWORD || ''
 };
