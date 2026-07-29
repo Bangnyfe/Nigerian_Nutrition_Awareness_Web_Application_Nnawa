@@ -9,16 +9,30 @@ import {
   createProduct,
   updateProduct
 } from '../services/productService.js';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function AdminProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { clearAuth } = useAuth();
   const isEditing = id !== undefined;
 
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // A 401 from any admin action means the session has expired. Auth state is
+  // cleared and the administrator is returned to the login page, matching the
+  // behaviour of the dashboard.
+  function handlePossibleAuthError(requestError) {
+    if (requestError.status === 401) {
+      clearAuth();
+      navigate('/admin/login', { replace: true });
+      return true;
+    }
+    return false;
+  }
 
   useEffect(() => {
     let isActive = true;
@@ -54,14 +68,23 @@ function AdminProductPage() {
   }, [id, isEditing]);
 
   // The form surfaces any thrown validation errors; on success the browser
-  // returns to the dashboard.
+  // returns to the dashboard. An expired session is handled here rather than
+  // shown as a form error.
   async function handleSubmit(payload) {
-    if (isEditing) {
-      await updateProduct(id, payload);
-    } else {
-      await createProduct(payload);
+    try {
+      if (isEditing) {
+        await updateProduct(id, payload);
+      } else {
+        await createProduct(payload);
+      }
+      navigate('/admin');
+    } catch (requestError) {
+      if (handlePossibleAuthError(requestError)) {
+        return;
+      }
+      // Non-auth errors are re-thrown so ProductForm can display them.
+      throw requestError;
     }
-    navigate('/admin');
   }
 
   if (isLoading) {
@@ -99,5 +122,4 @@ function AdminProductPage() {
     </div>
   );
 }
-
 export default AdminProductPage;
