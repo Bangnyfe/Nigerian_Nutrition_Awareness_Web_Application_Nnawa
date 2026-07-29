@@ -20,7 +20,7 @@ function MainLayout() {
           <nav className="site-nav">
             <Link to="/">Home</Link>
             <Link to="/search">Search</Link>
-            <Link to="/how-it-works">How It Works</Link>
+            <Link to="/how-it-works">How Nnawa Evaluates Foods</Link>
             <Link to="/about">About</Link>
             {isAuthenticated ? (
               <>
