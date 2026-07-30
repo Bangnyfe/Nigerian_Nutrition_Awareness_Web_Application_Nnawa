@@ -26,6 +26,12 @@ The admin credentials are demo credentials provided for evaluation.
 | Session storage  | SQLite (better-sqlite3-session-store) |
 | Auth             | express-session + bcrypt |
 
+## API
+
+The backend exposes a REST API under the `/api/v1` prefix. See
+[API.md](API.md) for full endpoint documentation, including request and
+response formats and authentication requirements.
+
 ## Features
 
 - Search packaged food products by name
