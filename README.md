@@ -108,7 +108,7 @@ backend.
 ### 4. Log in
 
 Open http://localhost:5173, go to `/admin/login`, and sign in with the
-`ADMIN_EMAIL` and password from the backend `.env`.
+`ADMIN_EMAIL` and password that YOU set from the backend `.env`.
 
 ## Production build (single service)
 
